@@ -75,7 +75,7 @@ public class Estado {
 
     @Override
     public String toString() {
-        return "Estado{" + "id=" + id + ", name=" + name + ", Es inicial=" + ((initial)?"Sí":"No") + ", Es final=" + ((fina)?"Sí":"No") + ", x=" + x + ", y=" + y + '}';
+        return "Estado{" + "Número=" + id + ", Nombre=" + name + ", Es inicial=" + ((initial)?"Sí":"No") + ", Es final=" + ((fina)?"Sí":"No") + ", x=" + x + ", y=" + y + '}';
     }
     
       

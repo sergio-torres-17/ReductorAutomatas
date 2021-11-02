@@ -10,28 +10,28 @@ package Objetos;
  * @author SERGIO
  */
 public class Transicion {
-    private int de, hacia;
-    String valor;
+    private String de, hacia;
+    private String valor;
 
-    public Transicion(int de, int hacia, String valor) {
+    public Transicion(String de, String hacia, String valor) {
         this.de = de;
         this.hacia = hacia;
         this.valor = valor;
     }
 
-    public int getDe() {
+    public String getDe() {
         return de;
     }
 
-    public void setDe(int de) {
+    public void setDe(String de) {
         this.de = de;
     }
 
-    public int getHacia() {
+    public String getHacia() {
         return hacia;
     }
 
-    public void setHacia(int hacia) {
+    public void setHacia(String hacia) {
         this.hacia = hacia;
     }
 
@@ -42,13 +42,4 @@ public class Transicion {
     public void setValor(String valor) {
         this.valor = valor;
     }
-
-    @Override
-    public String toString() {
-        return "Transicion{" + "de=" + de + ", hacia=" + hacia + ", valor=" + valor + '}';
-    }
-
-    
-    
-    
 }

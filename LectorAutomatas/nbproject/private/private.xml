@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documents/NetBeansProjects/LectorAutomatas/src/Parser/Parser.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/LectorAutomatas/src/Objetos/Estado.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/LectorAutomatas/src/Objetos/Transicion.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/LectorAutomatas/src/Objetos/Automaton.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/LectorAutomatas/src/Vista/Runner.java</file>
+            <file>file:/D:/Documents/GitHub/ReductorAutómatas/LectorAutomatas/src/Herramientas/Conversores.java</file>
+            <file>file:/D:/Documents/GitHub/ReductorAutómatas/LectorAutomatas/src/Objetos/Automata.java</file>
+            <file>file:/D:/Documents/GitHub/ReductorAutómatas/LectorAutomatas/src/Herramientas/ControlArchivos.java</file>
+            <file>file:/D:/Documents/GitHub/ReductorAutómatas/LectorAutomatas/src/Vista/MenuPrincipal.java</file>
+            <file>file:/D:/Documents/GitHub/ReductorAutómatas/LectorAutomatas/src/Vista/VentanaMuestra.java</file>
+            <file>file:/D:/Documents/GitHub/ReductorAutómatas/LectorAutomatas/src/Objetos/Transicion.java</file>
+            <file>file:/D:/Documents/GitHub/ReductorAutómatas/LectorAutomatas/src/Objetos/Estado.java</file>
         </group>
     </open-files>
 </project-private>
