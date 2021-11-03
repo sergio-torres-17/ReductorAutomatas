@@ -8,6 +8,7 @@ package Vista;
 import Herramientas.ControlArchivos;
 import Herramientas.Conversores;
 import Objetos.Automata;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -50,7 +51,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(51, 255, 153));
         jButton2.setFont(new java.awt.Font("Lucida Handwriting", 1, 18)); // NOI18N
-        jButton2.setText("Equivalencia");
+        jButton2.setText("Equivalencia  (Teorema de Moore)");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -62,20 +63,22 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addGap(200, 200, 200)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(96, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(95, 95, 95))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(67, 67, 67)
+                .addGap(78, 78, 78)
                 .addComponent(jButton1)
-                .addGap(69, 69, 69)
+                .addGap(35, 35, 35)
                 .addComponent(jButton2)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -93,16 +96,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       Automata aut= new Conversores(ControlArchivos.abrirArchivo(this)).constructorAutomata();
-        System.out.println("Automata construido");
-        this.setVisible(false);
-        new VentanaMuestra(aut).setVisible(true);
+        this.simplificacion();
     }//GEN-LAST:event_jButton1ActionPerformed
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Automata aut= new Conversores(ControlArchivos.abrirArchivo(this)).constructorAutomata();
-        System.out.println("Automata construido");
-        this.setVisible(false);
-        new VentanaMuestra(aut).setVisible(true);
+        this.equivalencia();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -140,6 +137,25 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
     }
 
+    private void simplificacion() {
+        Automata aut = new Conversores(ControlArchivos.abrirArchivo(this)).constructorAutomata();
+        System.out.println("Automata construido");
+        this.setVisible(false);
+        new VentanaMuestra(aut).setVisible(true);
+    }
+
+    private void equivalencia() {
+        Automata q, qPrima;
+        q = new Conversores(ControlArchivos.abrirArchivo(this, "Abrir q")).constructorAutomata();
+        qPrima = new Conversores(ControlArchivos.abrirArchivo(this, "Abrir q' (Q prima)")).constructorAutomata();
+        System.out.println("Automata construido");
+        if (q != null && qPrima != null) {
+            this.setVisible(false);
+            new VentanaEquivalencia(q,qPrima).setVisible(true);
+        }else
+            JOptionPane.showMessageDialog(this, "Se tiene que seleccionar al menos 2 autómatas", "Faltan automatas", 1);
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

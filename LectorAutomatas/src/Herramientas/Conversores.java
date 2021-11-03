@@ -134,7 +134,6 @@ public class Conversores {
     }
     public static DefaultTableModel tabularEstadosYTransiciones(String[] palabrasLenguaje, ArrayList<Transicion> listaTransiciones,JTable tabla, ArrayList<Estado> lista){
         DefaultTableModel dev = new DefaultTableModel();
-        
         dev.addColumn("Origen");
         dev.addColumn("Parametro");
         dev.addColumn("destino");

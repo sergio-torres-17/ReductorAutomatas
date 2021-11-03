@@ -2,10 +2,6 @@ package Objetos;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author SERGIO
- */
 public class Automata {
     private ArrayList<Estado> estados;
     private ArrayList<Transicion> trasiciones;
