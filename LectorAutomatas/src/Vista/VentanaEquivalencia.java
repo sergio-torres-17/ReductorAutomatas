@@ -6,7 +6,13 @@
 package Vista;
 
 import Herramientas.Conversores;
+import Objetos.AFDs_Equivalentes;
 import Objetos.Automata;
+import Objetos.Estado;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -15,6 +21,7 @@ import Objetos.Automata;
 public class VentanaEquivalencia extends javax.swing.JFrame {
 
     private Automata q,qPrima;
+    private Estado eq,estadoQP;
     
     public VentanaEquivalencia() {
         initComponents();
@@ -24,6 +31,43 @@ public class VentanaEquivalencia extends javax.swing.JFrame {
         initComponents();
         this.q = q;
         this.qPrima = qPrima;
+        this.lstEstadosQ.addListSelectionListener(new ListSelectionListener() {
+            JList info;
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                System.out.println("Estado principal: "+eq);
+                System.out.println("Estado prima: "+estadoQP);
+                if(eq==null){
+                    info = (JList)lse.getSource();
+                    eq = Conversores.buscarAutomataPorNombre(String.valueOf(info.getSelectedValue()).split(" ")[0], q.getEstados());
+                }
+                if(estadoQP!=null&&eq!=null){
+                    if(Conversores.evaluarDosEstadosCompatibles(eq, estadoQP))
+                        new AFDs_Equivalentes(txtArea).simplificacion(lblPalabrasQ.getText().substring(1, lblPalabrasQ.getText().length()-1),q.getEstados().size(), q.getEstados(),txtArea);
+                    else
+                        JOptionPane.showMessageDialog(VentanaEquivalencia.this, "Estados incompatibles", "Un estado es final y el otro no", 0);
+                }
+            }
+        });
+        this.lstEstadosQPrima.addListSelectionListener(new ListSelectionListener() {
+            JList info;
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                System.out.println("Estado principal: "+eq);
+                System.out.println("Estado prima: "+estadoQP);
+                if(estadoQP==null){
+                    info = (JList)lse.getSource();
+                    estadoQP = Conversores.buscarAutomataPorNombre(String.valueOf(info.getSelectedValue()).split(" ")[0], qPrima.getEstados());
+                }
+                if(estadoQP!=null&&eq!=null){
+                    if(Conversores.evaluarDosEstadosCompatibles(eq, estadoQP))
+                        new AFDs_Equivalentes(txtArea).simplificacion(lblPalabrasQ.getText().substring(1, lblPalabrasQ.getText().length()-1),q.getEstados().size(),qPrima.getEstados(),txtArea);
+                    else
+                        JOptionPane.showMessageDialog(VentanaEquivalencia.this, "Estados incompatibles", "Un estado es final y el otro no", 0);
+                }
+                   
+            }
+        });
     }
 
     /**
@@ -35,6 +79,7 @@ public class VentanaEquivalencia extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollBar1 = new javax.swing.JScrollBar();
         jPanel1 = new javax.swing.JPanel();
         pnlQ1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -46,9 +91,9 @@ public class VentanaEquivalencia extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tbTransicionesQ = new javax.swing.JTable();
         pnlTabla = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblSimplificación = new javax.swing.JTable();
         lblSimplificación = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtArea = new javax.swing.JTextArea();
         pnlQ2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         lblPalabrasQPrima = new javax.swing.JLabel();
@@ -80,6 +125,11 @@ public class VentanaEquivalencia extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        lstEstadosQ.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstEstadosQMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(lstEstadosQ);
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
@@ -105,23 +155,22 @@ public class VentanaEquivalencia extends javax.swing.JFrame {
             .addGroup(pnlQ1Layout.createSequentialGroup()
                 .addGroup(pnlQ1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlQ1Layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel7))
+                    .addGroup(pnlQ1Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(lblPalabrasQ))
+                    .addGroup(pnlQ1Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
                         .addGroup(pnlQ1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlQ1Layout.createSequentialGroup()
-                                .addGap(94, 94, 94)
-                                .addComponent(jLabel7))
-                            .addGroup(pnlQ1Layout.createSequentialGroup()
-                                .addGap(77, 77, 77)
-                                .addComponent(lblPalabrasQ))
-                            .addGroup(pnlQ1Layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addGroup(pnlQ1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addGroup(pnlQ1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)))))
-                        .addGap(0, 56, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                            .addComponent(jLabel2)
+                            .addGroup(pnlQ1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)))))
+                .addContainerGap(62, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlQ1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlQ1Layout.setVerticalGroup(
             pnlQ1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,34 +190,26 @@ public class VentanaEquivalencia extends javax.swing.JFrame {
                 .addGap(17, 17, 17))
         );
 
-        tblSimplificación.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tblSimplificación);
-
         lblSimplificación.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         lblSimplificación.setText("Equivalencia");
+
+        txtArea.setColumns(20);
+        txtArea.setRows(5);
+        jScrollPane1.setViewportView(txtArea);
 
         javax.swing.GroupLayout pnlTablaLayout = new javax.swing.GroupLayout(pnlTabla);
         pnlTabla.setLayout(pnlTablaLayout);
         pnlTablaLayout.setHorizontalGroup(
             pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTablaLayout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
             .addGroup(pnlTablaLayout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(lblSimplificación)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlTablaLayout.createSequentialGroup()
+                        .addGap(129, 129, 129)
+                        .addComponent(lblSimplificación))
+                    .addGroup(pnlTablaLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         pnlTablaLayout.setVerticalGroup(
             pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,11 +217,9 @@ public class VentanaEquivalencia extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(lblSimplificación)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        lblSimplificación.getAccessibleContext().setAccessibleName("Equivalencia");
 
         jLabel4.setText("Palabras del lenguaje");
 
@@ -216,11 +255,11 @@ public class VentanaEquivalencia extends javax.swing.JFrame {
         pnlQ2Layout.setHorizontalGroup(
             pnlQ2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlQ2Layout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlQ2Layout.createSequentialGroup()
                 .addContainerGap(64, Short.MAX_VALUE)
                 .addGroup(pnlQ2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlQ2Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(88, 88, 88))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlQ2Layout.createSequentialGroup()
                         .addGroup(pnlQ2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlQ2Layout.createSequentialGroup()
@@ -230,10 +269,10 @@ public class VentanaEquivalencia extends javax.swing.JFrame {
                             .addGroup(pnlQ2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addGap(41, 41, 41))))
-            .addGroup(pnlQ2Layout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+                        .addGap(41, 41, 41))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlQ2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(80, 80, 80))))
         );
         pnlQ2Layout.setVerticalGroup(
             pnlQ2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,6 +318,9 @@ public class VentanaEquivalencia extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         mostrarPropiedadesAutomata();
     }//GEN-LAST:event_formWindowOpened
+
+    private void lstEstadosQMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstEstadosQMouseClicked
+    }//GEN-LAST:event_lstEstadosQMouseClicked
     private void mostrarPropiedadesAutomata(){
         /**********Visualización de propiedades del automata q***********/
         this.lblPalabrasQ.setText(Conversores.detectorDelLenguaje(this.q.getTrasiciones()));
@@ -332,6 +374,7 @@ public class VentanaEquivalencia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -347,6 +390,6 @@ public class VentanaEquivalencia extends javax.swing.JFrame {
     private javax.swing.JPanel pnlTabla;
     private javax.swing.JTable tbTransicionesQ;
     private javax.swing.JTable tbTransicionesQPrima;
-    private javax.swing.JTable tblSimplificación;
+    private javax.swing.JTextArea txtArea;
     // End of variables declaration//GEN-END:variables
 }

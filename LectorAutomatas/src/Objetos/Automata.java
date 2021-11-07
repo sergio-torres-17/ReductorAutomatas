@@ -22,9 +22,4 @@ public class Automata {
     public void setTrasiciones(ArrayList<Transicion> trasiciones) {
         this.trasiciones = trasiciones;
     }
-
-    
-    
-    
-    
 }
